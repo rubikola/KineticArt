@@ -1,7 +1,7 @@
 import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
-import { Dumbbell, Users, Calendar, LogOut, LayoutDashboard, User, MessageCircle, Plus } from 'lucide-react';
+import { Dumbbell, Users, Calendar, LogOut, LayoutDashboard, User, MessageCircle, Plus, Book } from 'lucide-react';
 
 export function AppLayout() {
   const { profile, signOut } = useAuth();
@@ -14,6 +14,7 @@ export function AppLayout() {
         { to: '/trainer', icon: LayoutDashboard, label: 'Home', end: true },
         { to: '/trainer/clients', icon: Users, label: 'Clientes', end: false },
         { to: '/trainer/exercises', icon: Dumbbell, label: 'Ejercicios', end: false },
+        { to: '/trainer/library', icon: Book, label: 'Biblioteca', end: false },
         { to: '/trainer/routines', icon: Calendar, label: 'Rutinas', end: false },
         { to: '/chat', icon: MessageCircle, label: 'Chat', end: false },
       ]

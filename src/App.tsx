@@ -8,6 +8,7 @@ const RegisterPage = lazy(() => import('./pages/auth/RegisterPage'));
 const TrainerDashboard = lazy(() => import('./pages/trainer/DashboardPage'));
 const ClientsPage = lazy(() => import('./pages/trainer/ClientsPage'));
 const ExercisesPage = lazy(() => import('./pages/trainer/ExercisesPage'));
+const LibraryPage = lazy(() => import('./pages/trainer/LibraryPage'));
 const RoutinesPage = lazy(() => import('./pages/trainer/RoutinesPage'));
 const ClientDashboard = lazy(() => import('./pages/client/DashboardPage'));
 const MyRoutinesPage = lazy(() => import('./pages/client/MyRoutinesPage'));
@@ -75,6 +76,7 @@ function AppRoutes() {
         <Route path="/trainer" element={<Suspense fallback={<PageSpinner />}><ProtectedRoute requiredRole="entrenador"><TrainerDashboard /></ProtectedRoute></Suspense>} />
         <Route path="/trainer/clients" element={<Suspense fallback={<PageSpinner />}><ProtectedRoute requiredRole="entrenador"><ClientsPage /></ProtectedRoute></Suspense>} />
         <Route path="/trainer/exercises" element={<Suspense fallback={<PageSpinner />}><ProtectedRoute requiredRole="entrenador"><ExercisesPage /></ProtectedRoute></Suspense>} />
+        <Route path="/trainer/library" element={<Suspense fallback={<PageSpinner />}><ProtectedRoute requiredRole="entrenador"><LibraryPage /></ProtectedRoute></Suspense>} />
         <Route path="/trainer/routines" element={<Suspense fallback={<PageSpinner />}><ProtectedRoute requiredRole="entrenador"><RoutinesPage /></ProtectedRoute></Suspense>} />
         <Route path="/client" element={<Suspense fallback={<PageSpinner />}><ProtectedRoute requiredRole="cliente"><ClientDashboard /></ProtectedRoute></Suspense>} />
         <Route path="/client/routines" element={<Suspense fallback={<PageSpinner />}><ProtectedRoute requiredRole="cliente"><MyRoutinesPage /></ProtectedRoute></Suspense>} />
