@@ -19,6 +19,10 @@ export interface Exercise {
   description: string;
   primary_muscle: string;
   youtube_video_id: string;
+  thumbnail_url?: string;
+  difficulty?: string;
+  equipment_needed?: string;
+  movement_pattern?: string;
   created_by: string;
   created_at: string;
   updated_at: string;

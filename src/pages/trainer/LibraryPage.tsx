@@ -36,6 +36,7 @@ interface ProgramExercise {
     name: string;
     primary_muscle: string;
     youtube_video_id: string | null;
+    thumbnail_url: string | null;
     description: string | null;
   };
 }
@@ -318,6 +319,13 @@ export default function LibraryPage() {
                             exit={{ height: 0, opacity: 0 }}
                             className="mt-1 ml-3 border-l border-dark-border/30 pl-3 py-2 space-y-2"
                           >
+                            {pe.exercise?.thumbnail_url && (
+                              <img
+                                src={pe.exercise.thumbnail_url}
+                                alt={pe.exercise.name}
+                                className="w-full aspect-video object-cover rounded-lg"
+                              />
+                            )}
                             <div className="flex items-center gap-4 text-xs text-white/50">
                               <span className="font-medium">{pe.sets}x{pe.reps_min}-{pe.reps_max}</span>
                               {pe.rest_seconds && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{formatRest(pe.rest_seconds)}</span>}
