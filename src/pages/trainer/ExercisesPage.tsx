@@ -31,8 +31,10 @@ export default function ExercisesPage() {
 
   async function fetchExercises() {
     setLoading(true);
-    const { data } = await supabase.from('exercises').select('*').eq('created_by', user!.id).order('name');
-    setExercises(data || []);
+    const { data: userEx } = await supabase.from('exercises').select('*').eq('created_by', user!.id).order('name');
+    const { data: libEx } = await supabase.from('training_exercises').select('*').order('name');
+    const all = [...(userEx || []), ...(libEx?.map(e => ({ ...e, created_by: 'library' })) || [])];
+    setExercises(all);
     setLoading(false);
   }
 
@@ -55,7 +57,11 @@ export default function ExercisesPage() {
     finally { setSaving(false); }
   }
 
-  async function handleDelete(id: string) {
+  async function handleDelete(id: string, createdBy: string) {
+    if (createdBy === 'library') {
+      toast('No puedes eliminar ejercicios de la biblioteca', 'error');
+      return;
+    }
     const { error } = await supabase.from('exercises').delete().eq('id', id);
     if (!error) { setExercises((prev) => prev.filter((e) => e.id !== id)); toast('Ejercicio eliminado', 'success'); }
   }
@@ -160,8 +166,12 @@ export default function ExercisesPage() {
                     {ex.description && <p className="text-sm text-white/40 mt-2 line-clamp-2">{ex.description}</p>}
                   </div>
                   <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button onClick={() => openEdit(ex)} className="p-1.5 rounded-lg hover:bg-white/5 text-white/40 hover:text-mint"><Pencil className="h-4 w-4" /></button>
-                    <button onClick={() => handleDelete(ex.id)} className="p-1.5 rounded-lg hover:bg-flame/10 text-white/40 hover:text-flame"><Trash2 className="h-4 w-4" /></button>
+                    {ex.created_by !== 'library' && (
+                      <>
+                        <button onClick={() => openEdit(ex)} className="p-1.5 rounded-lg hover:bg-white/5 text-white/40 hover:text-mint"><Pencil className="h-4 w-4" /></button>
+                        <button onClick={() => handleDelete(ex.id, ex.created_by)} className="p-1.5 rounded-lg hover:bg-flame/10 text-white/40 hover:text-flame"><Trash2 className="h-4 w-4" /></button>
+                      </>
+                    )}
                   </div>
                 </div>
               </Card>
